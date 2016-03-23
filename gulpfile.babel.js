@@ -95,6 +95,19 @@ gulp.task('styles', () => {
     'android >= 4.4',
     'bb >= 10'
   ];
+  
+// Tâche "critical" = critical inline CSS
+gulp.task('critical', function() {
+  return  gulp.src(prod + '/*.html')
+    .pipe(critical({
+      base: prod,
+      inline: true,
+      width: 320,
+      height: 480,
+      minify: true
+    }))
+    .pipe(gulp.dest(prod));
+});
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
