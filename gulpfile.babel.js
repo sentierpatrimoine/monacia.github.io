@@ -40,14 +40,14 @@ const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src('app/scripts/**/*.js')
+  gulp.src('scripts/**/*.js')
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
 );
 
 // Optimize images
-gulp.task('images', () =>
+gulp.task('images/', () =>
   gulp.src('images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
