@@ -33,6 +33,7 @@ import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
+var critical = require('critical');
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -67,6 +68,19 @@ gulp.task('copy', () =>
   }).pipe(gulp.dest('dist'))
     .pipe($.size({title: 'copy'}))
 );
+
+// Generate & Inline Critical-path CSS
+gulp.task('critical', ['build'], function (cb) {
+    critical.generate({
+        inline: true,
+        base: 'dist/',
+        src: 'index.html',
+        dest: 'dist/index-critical.html',
+        width: 320,
+        height: 480,
+        minify: true
+    });
+});
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', () => {
